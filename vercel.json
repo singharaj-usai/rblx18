@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/server.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/Setting/QuietGet/RCCService:accessKey",
+      "dest": "/api/server.ts"
+    },
+    {
+      "src": "/GetAllowedSecurityVersions",
+      "dest": "/api/server.ts"
+    },
+    {
+      "src": "/GetAllowedMD5Hashes",
+      "dest": "/api/server.ts"
+    }
+  ]
+}
