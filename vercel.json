@@ -18,6 +18,11 @@
     {
       "src": "/GetAllowedMD5Hashes",
       "dest": "/api/server.ts"
+    },
+    {
+      "src": "/thumbnail/render",
+      "dest": "/api/server.ts",
+      "methods": ["POST"]
     }
   ]
 }

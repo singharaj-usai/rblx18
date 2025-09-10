@@ -43,3 +43,4 @@ temp/
 *.rbxmx
 Packages/
 ServerStorage/
+.vercel

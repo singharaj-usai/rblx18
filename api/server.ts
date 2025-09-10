@@ -1,5 +1,7 @@
 import express from 'express';
 import path from 'path';
+import { Buffer } from 'buffer';
+import { thumbnailGenerator } from './services/thumbnailGenerator';
 
 const app = express();
 const port = process.env.PORT || 80;
@@ -47,6 +49,36 @@ app.get('/GetAllowedMD5Hashes', (req, res) => {
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
+});
+
+// Thumbnail rendering endpoint
+app.post('/thumbnail/render', async (req, res) => {
+  try {
+    const { placeId = 1818, width = 420, height = 420, format = 'PNG' } = req.body;
+    
+    // Generate thumbnail using RCCService
+    const thumbnailData = await thumbnailGenerator.generateThumbnail({
+      placeId,
+      width,
+      height,
+      format
+    });
+    
+    // Convert base64 to buffer
+    const imageBuffer = Buffer.from(thumbnailData, 'base64');
+    
+    // Set appropriate headers
+    res.set({
+      'Content-Type': 'image/png',
+      'Content-Length': imageBuffer.length,
+      'Cache-Control': 'public, max-age=3600'
+    });
+
+    return res.send(imageBuffer);
+  } catch (error) {
+    console.error('Thumbnail generation error:', error);
+    return res.status(500).json({ error: 'Failed to generate thumbnail' });
+  }
 });
 
 app.listen(port, () => {

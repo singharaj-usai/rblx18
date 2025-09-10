@@ -1,0 +1,27 @@
+-- 2016 RCCService Thumbnail Generation Script
+
+-- Set up game environment
+game:GetService("ContentProvider"):SetBaseUrl("http://www.rblx18.com")
+game:GetService("ScriptContext").ScriptsDisabled = true
+
+-- Create a basic part for testing
+local brick = Instance.new("Part")
+brick.BrickColor = BrickColor.new("Really red")
+brick.Material = Enum.Material.Plastic
+brick.Anchored = true
+brick.Size = Vector3.new(5, 5, 5)
+brick.CFrame = CFrame.new(0, 10, 0)
+brick.Parent = game.Workspace
+
+-- Set up lighting for better rendering
+local lighting = game:GetService("Lighting")
+lighting.Brightness = 2
+lighting.GlobalShadows = true
+lighting.Ambient = Color3.new(0.5, 0.5, 0.5)
+
+-- Generate thumbnail
+print("Rendering thumbnail...")
+local thumbnailGenerator = game:GetService("ThumbnailGenerator")
+local thumbnail = thumbnailGenerator:Click("PNG", 420, 420, true)
+print("Thumbnail generated")
+print("data:image/png;base64," .. thumbnail)
